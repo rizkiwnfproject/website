@@ -1,0 +1,98 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  // output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum SkillCategory {
+  FRONTEND
+  BACKEND
+  FULLSTACK
+  ML
+  ANALYST
+  TOOLS
+  DEVOPS
+  DATABASE
+  UIUX
+  COLLABORATE
+  OTHER
+}
+
+enum SkillLevel {
+  BEGINNER
+  INTERMEDIATE
+  EXPERT
+}
+
+model PortofolioHero {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  photo       String?
+  status      Boolean  @default(true)
+  cvLink      String
+  createdAt   DateTime @default(now())
+}
+
+model PortofolioSkill {
+  id        String        @id @default(cuid())
+  name      String
+  level     SkillLevel
+  category  SkillCategory
+  createdAt DateTime      @default(now())
+}
+
+model PortofolioProject {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  thumbnail   String?
+  github      String?
+  demo        String?
+  tags        String[]
+  createdAt   DateTime @default(now())
+}
+
+model PortofolioCertificate {
+  id              String   @id @default(cuid())
+  title           String
+  description     String
+  thumbnail       String?
+  issue_date      DateTime
+  issuer          String
+  certificate_url String?
+  tags            String[]
+  createdAt       DateTime @default(now())
+}
+
+model PortofolioExperience {
+  id          String    @id @default(cuid())
+  company     String
+  position    String
+  description String
+  start_date  DateTime
+  end_date    DateTime?
+  certificate String?
+  createdAt   DateTime  @default(now())
+}
+
+model PortofolioSocialMedia {
+  id        String   @id @default(cuid())
+  email     String
+  instagram String
+  github    String
+  whatsapp  String
+  linkedin  String
+  createdAt DateTime @default(now())
+}
